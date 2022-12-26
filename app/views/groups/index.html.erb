@@ -1,0 +1,9 @@
+<div class="container">
+<h1>Groups</h1>
+<hr>
+<% @groups.each do |group|%>
+    <%= group.name%>
+    <hr>
+    <% end %><br>
+<%= link_to "Add Group", new_group_path, class:"btn btn-outline-secondary"%>
+</div>

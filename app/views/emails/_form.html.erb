@@ -1,0 +1,49 @@
+<%= form_with(model: email) do |form| %>
+  <% if email.errors.any? %>
+    <div style="color: red">
+      <h2><%= pluralize(email.errors.count, "error") %> prohibited this email from being saved:</h2>
+
+      <ul>
+        <% email.errors.each do |error| %>
+          <li><%= error.full_message %></li>
+        <% end %>
+      </ul>
+    </div>
+  <% end %>
+  <div class="row">
+<%if email.new_record?%>
+  <div class="col-md-3">
+    <%= form.label :sent_to, style: "display: block" %>
+    <%#= form.collection_select :receiver, @receiver.order(:name), :id, :name,  {prompt: '---------'},{ multiple: true }%>
+      <%= form.select :sent_to, User.all.pluck(:name), { include_blank: false },
+                         { multiple: true, data: {controller: 'slim', slim_target: 'field'}} %>
+  </div>
+  <%# <div class="col-md-3"> %>
+    <%# <%= form.label :groups, style: "display: block" %>
+    <%#= form.collection_select :groups, @groups.order(:name), :id, :name, {prompt: '---------'}, { multiple: true }  %>
+      <%# <%= form.select :groups, @groups.pluck(:name, :id), { include_blank: false }, %>
+                         <%# { multiple: true, data: {controller: 'slim', slim_target: 'field'}} %>
+  <%# </div> %>
+  <%end %>
+  </div>
+  <div class="mt-2">
+    <%= form.label :subject , style: "display: block" %>
+    <%= form.text_field :subject %>
+  </div>
+
+  <div class="col-md-6">
+    <%= form.label :description, style: "display: block" %>
+    <%= form.rich_text_area :description %>
+  </div>
+
+  <div>
+    <%#= form.label :sender, style: "display: block" %>
+    <%#= form.text_field :sender,value: current_user.email,disabled: true%>
+  </div>
+  
+  <div class="mt-2">
+    <%= form.submit %>
+  </div>
+<% end %>
+
+  

@@ -1,0 +1,17 @@
+
+<div class="container">
+<h1>New Group </h1>
+<hr>
+<%= form_for @group do |form| %>
+<%= form.label :name%><br>
+  <%= form.text_field :name %>
+  <br>
+  <%= form.label :users%><br>
+  <%= form.select :users, User.all.order(:name).collect { |p| [ p.name] }, {} , { class: "select", multiple: "true"} %>
+  <br>
+  <%= form.submit %>
+<% end %>
+</div>
+<script>
+ $('.select').select2();
+</script>

@@ -1,28 +1,31 @@
-<section class="vh-100 mx-2">
-  <div class="container py-2 ">
-    <div class="row d-flex justify-content-center align-items-center">
-      <div class="col-12">
-        <div class="card shadow-2-strong" style="border-radius: 1rem;">
-          <div class="card-body  text-left">
-          <table class="table">
-            <tr>
-              <th scope="col"> Send By </th>
-              <th scope="col"> Subject </th>
-              <th colspan="3"> Action </th>
-            </tr>
+<div class="d-flex justify-content-start card text-center">
+  <div class="card-body">
+    <h5 class="card-title">Search</h5>
+    <%= search_form_for @q do |f| %>
+      <%= f.search_field :subject_or_description_or_receivers_email_cont %>
+      <%= f.submit %>
+    <% end %>
+    <hr>
+     <table class="table ">
+        <tr>
+          <th scope="col"> Send By </th>
+          <th scope="col"> Subject </th>
+          <th colspan="3"> Action </th>
+        </tr>
 
-            <% @emails.each do |email| %>
-             <tr>
-              <td><%= email.sent_by.name%></td>
-              <td><%= email.subject%></td>
-              <td><%=button_to "Delete", @email%></td>
-              </tr>
-            <% end %>
-          </table>
-          </div>
-        </div>
-      </div>
-    </div>
+        <% @emails.each do |email| %>
+        <tr>
+          <td><%= link_to email.sent_by.name, email %></td>
+          <td><%= email.subject%></td>
+          <td><%=link_to(image_tag("delete.svg"), email_path(email),method: :delete) %></td>
+          <td><%=link_to(image_tag("#{email.important ? 'fill-star.svg' : 'star.svg'}", class:"important_mail"),update_important_emails_email_path(email)) %></td>
+          </tr>
+        <% end %>
+    </table>
   </div>
-</section>
+</div>
 
+<script>
+
+
+</script>

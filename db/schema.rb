@@ -10,7 +10,10 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 2022_12_26_114315) do
+ActiveRecord::Schema[7.0].define(version: 2022_12_27_074509) do
+  # These are extensions that must be enabled in order to support this database
+  enable_extension "plpgsql"
+
   create_table "action_text_rich_texts", force: :cascade do |t|
     t.string "name", null: false
     t.text "body"
@@ -49,14 +52,39 @@ ActiveRecord::Schema[7.0].define(version: 2022_12_26_114315) do
     t.index ["blob_id", "variation_digest"], name: "index_active_storage_variant_records_uniqueness", unique: true
   end
 
+  create_table "ckeditor_assets", force: :cascade do |t|
+    t.string "data_file_name", null: false
+    t.string "data_content_type"
+    t.integer "data_file_size"
+    t.string "data_fingerprint"
+    t.string "type", limit: 30
+    t.datetime "created_at", precision: nil, null: false
+    t.datetime "updated_at", precision: nil, null: false
+    t.index ["type"], name: "index_ckeditor_assets_on_type"
+  end
+
   create_table "emails", force: :cascade do |t|
     t.string "subject"
     t.string "description"
-    t.string "sent_by"
-    t.string "sent_to"
+    t.bigint "sent_by_id"
     t.boolean "important"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.index ["sent_by_id"], name: "index_emails_on_sent_by_id"
+  end
+
+  create_table "emails_groups", id: false, force: :cascade do |t|
+    t.bigint "email_id", null: false
+    t.bigint "group_id", null: false
+    t.index ["email_id"], name: "index_emails_groups_on_email_id"
+    t.index ["group_id"], name: "index_emails_groups_on_group_id"
+  end
+
+  create_table "emails_receivers", id: false, force: :cascade do |t|
+    t.bigint "email_id", null: false
+    t.bigint "receiver_id", null: false
+    t.index ["email_id"], name: "index_emails_receivers_on_email_id"
+    t.index ["receiver_id"], name: "index_emails_receivers_on_receiver_id"
   end
 
   create_table "groups", force: :cascade do |t|
@@ -66,8 +94,8 @@ ActiveRecord::Schema[7.0].define(version: 2022_12_26_114315) do
   end
 
   create_table "groups_users", id: false, force: :cascade do |t|
-    t.integer "user_id", null: false
-    t.integer "group_id", null: false
+    t.bigint "user_id", null: false
+    t.bigint "group_id", null: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.index ["group_id"], name: "index_groups_users_on_group_id"
@@ -92,6 +120,7 @@ ActiveRecord::Schema[7.0].define(version: 2022_12_26_114315) do
 
   add_foreign_key "active_storage_attachments", "active_storage_blobs", column: "blob_id"
   add_foreign_key "active_storage_variant_records", "active_storage_blobs", column: "blob_id"
+  add_foreign_key "emails", "users", column: "sent_by_id"
   add_foreign_key "groups_users", "groups"
   add_foreign_key "groups_users", "users"
 end

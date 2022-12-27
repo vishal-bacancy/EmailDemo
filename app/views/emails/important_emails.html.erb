@@ -1,0 +1,19 @@
+<div class="d-flex justify-content-start card text-center">
+    <h3 class="position-absolute top-0 start-0 mx-2">Important Mails</h3>
+    <div class="card-body">
+    <hr>
+        <table class="table ">
+            <tr>
+            <th scope="col"> Email Sender </th>
+            <th scope="col"> Subject </th>
+            </tr>
+
+            <% @emails.each do |email| %>
+            <tr>
+                <td><%= email.sent_by.name %></td>
+                <td><%= link_to email.subject , email %></td>
+            </tr>
+            <% end %>
+        </table>
+    </div>
+</div>

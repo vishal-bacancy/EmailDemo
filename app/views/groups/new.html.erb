@@ -7,7 +7,7 @@
   <%= form.text_field :name %>
   <br>
   <%= form.label :users%><br>
-  <%= form.select :users, User.all.order(:name).collect { |p| [ p.name] }, {} , { class: "select", multiple: "true"} %>
+  <%= form.select :user_ids, User.all.order(:name).collect { |p| [ p.name, p.id] }, {} , { class: "select", multiple: "true"} %>
   <br>
   <%= form.submit %>
 <% end %>

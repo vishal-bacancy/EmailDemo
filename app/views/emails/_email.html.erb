@@ -1,2 +1,13 @@
 <div id="<%= dom_id email %>">
+    <h2><%= email.subject %></h2>
+    <div>
+        Receivers:
+    </div>
+    <div>
+        <% email.receivers.each do |receiver| %>
+            <span>name: <%= receiver.name%></span><br>
+            <span>email: <%= receiver.email%></span>
+            <hr>
+        <% end %>
+    </div>
 </div>

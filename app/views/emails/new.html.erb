@@ -1,11 +1,11 @@
-<h1>New email</h1>
-
-<%= render "form", email: @email %>
-
+<div class="d-flex justify-content-start card text-center  m-4">
+  <div class="card-body">
+  <h3>Compose Email</h3>
+  <%= render "form", email: @email %>
 <br>
-
 <div>
-  <%= link_to "Back to emails", emails_path %>
+  <%= link_to "Back to emails", emails_path ,class:"btn btn-primary" %>
 </div>
-
+</div>
+</div>
 

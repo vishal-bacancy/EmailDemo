@@ -1,5 +1,13 @@
 Rails.application.routes.draw do
-  resources :emails
+  mount Ckeditor::Engine => '/ckeditor'
+  resources :emails do
+    member do 
+      get "update_important_emails"
+    end
+    collection do
+      get "important_emails"
+    end
+  end
   devise_for :users
   root "emails#index" 
   resources :groups

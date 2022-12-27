@@ -60,3 +60,8 @@ gem 'filterrific'
 gem "select2-rails"
 gem "sprockets-rails"
 gem "letter_opener", group: :development
+gem 'pg'
+gem 'pry-rails', :group => :development
+gem 'ckeditor'
+gem "mini_magick"
+gem 'ransack'

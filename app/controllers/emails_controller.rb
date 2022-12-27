@@ -5,7 +5,7 @@ class EmailsController < ApplicationController
   # GET /emails or /emails.json
   def index
     @q = Email.ransack(params[:q])
-    @emails = @q.result(distinct: true).order(:subject)
+    @emails = @q.result(distinct: true).includes(:receivers).where(receivers: { id: current_user.id}).order(:subject)
   end
 
   # GET /emails/1 or /emails/1.json
@@ -57,7 +57,7 @@ class EmailsController < ApplicationController
   end
 
   def important_emails
-    @emails = Email.where(important:"true")
+    @emails = Email.includes(:receivers).where(receivers: { id: current_user.id}).where(important:"true")
   end
   # DELETE /emails/1 or /emails/1.json
   def destroy
